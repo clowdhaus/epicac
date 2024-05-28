@@ -1,0 +1,22 @@
+[package]
+name = "epicac"
+version = "0.1.0"
+authors = ["Bryant Biggs <bryantbiggs@gmail.com>"]
+description = "Amazon EKS Pod Identity cross-account credentials"
+documentation = "https://github.com/clowdhaus/epicac"
+homepage = "https://github.com/clowdhaus/epicac"
+repository = "https://github.com/clowdhaus/epicac"
+license = "Apache-2.0"
+edition = "2021"
+categories = [
+  "command-line-utilities",
+  "kubernetes",
+]
+
+[dependencies]
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
