@@ -22,9 +22,10 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "account-b"
+  alias = "account_b"
+
   assume_role {
-    role_arn     = "<TODO>"
+    role_arn     = var.role_arn
     session_name = local.name
   }
 

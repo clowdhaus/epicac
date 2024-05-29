@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: epicac
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: epicac
+  namespace: epicac
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: epicac
+  namespace: epicac
+spec:
+  serviceAccountName: epicac
+  automountServiceAccountToken: false
+  containers:
+    - name: epicac
+      image: <UPDATE>
+      command: ["python", "/app/example.py"]
+      env:
+        - name: AWS_CONFIG_FILE
+          value: /opt/aws-config
+        - name: AWS_PROFILE
+          value: dest_role

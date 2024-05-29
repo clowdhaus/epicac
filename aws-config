@@ -1,0 +1,6 @@
+[profile dest_role]
+source_profile = src_role
+role_arn=<UPDATE>
+
+[profile src_role]
+credential_process = /opt/epicac
