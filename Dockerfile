@@ -25,5 +25,4 @@ COPY --from=rust-builder --chown=nonroot:nonroot /app/target/release/epicac /opt
 
 # Make sure you update Python version in path
 COPY --from=py-builder /home/nonroot/.local/lib/python3.12/site-packages /home/nonroot/.local/lib/python3.12/site-packages
-
 COPY example.py .
