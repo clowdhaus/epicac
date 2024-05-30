@@ -41,7 +41,7 @@ Ensure that you have installed the following tools locally:
     kubectl apply -f pod.yaml
     ```
 
-You can view the logged output with:
+    You can view the logged output with:
 
     ```sh
     kubectl logs -n epicac epicac
