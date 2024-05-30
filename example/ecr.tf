@@ -32,9 +32,9 @@ resource "local_file" "build_script" {
 
     # Update the pod manifest with the new image tag
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      sed -i "s|image:.*|image: ${module.ecr.repository_url}:$${TAG}|g" infra/pod.yaml
+      sed -i "s|image:.*|image: ${module.ecr.repository_url}:$${TAG}|g" ./pod.yaml
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-      sed -i '' "s|image:.*|image: ${module.ecr.repository_url}:$${TAG}|g" infra/pod.yaml
+      sed -i '' "s|image:.*|image: ${module.ecr.repository_url}:$${TAG}|g" ./pod.yaml
     else
       echo "Unsupported OS: $OSTYPE"
       exit 1
