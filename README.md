@@ -11,7 +11,8 @@ There are currently 3 possible ways to perform cross-account access with Amazon 
 2. Use IAM role chaining within your application. Within your application, you would add code that performs the equivalent API call of [`aws sts assume-role --role-arn <value> --role-session-name <value>`](https://docs.aws.amazon.com/cli/latest/reference/sts/assume-role.html) in order to assume the IAM role in the external account.
 3. Use IAM role chaining via the AWS credential provider chain by [sourcing credentials from an external process](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-sourcing-external.html).
 
-`epicac` utilizes option 3.
+> [!NOTE]  
+> `epicac` utilizes option 3.
 
 <p align="center">
   <img src=".github/eks-pod-identity.svg" alt="EKS Pod Identity cross account role assumption"/>
@@ -34,6 +35,11 @@ When configured, the overall process flow is as follows:
 5. In the source profile, the SDK will see that the `credential_process` is defined, so it will execute that process to retrieve credentials. This is where the SDK is invoking the `epicac` executable to retrieve credentials. It can easily be replaced with another executable that performs the same operation, or you can even use common Linux tools like `curl` and `jq` to retrieve credentials (`curl -H "Authorization: $(cat $AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE)" $AWS_CONTAINER_CREDENTIALS_FULL_URI | jq -c '{AccessKeyId: .AccessKeyId, SecretAccessKey: .SecretAccessKey, SessionToken: .Token, Expiration: .Expiration, Version: 1}'`).
 6. Upon retrieving the credentials, the SDK will exit the source profile and return to the original (entrypoint) profile and assume the role defined under `role_arn`. This is where the assume role process is executed automatically by the SDK.
 7. Finally, the default credential provider chain has reached completion and has resolved credentials from the assumed IAM role and the API call can be performed.
+
+> [!CAUTION]
+> This project provides compiled executables for use. However, since this process is dealing with credentials, it is recommended that you build from source after understanding what the code is doing. The executables provided are not malicious and you can see in full transparency their creation from the GitHub action workflows (i.e. - nothing else is being added or modified) - but you should always exercise caution when utilizing publicly provided code/executables that are interacting with credentials before utilizing them in your environments.
+>
+> I am not malicious, but please be vigilant and cautions :)
 
 ## Motivation
 
